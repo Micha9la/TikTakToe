@@ -22,7 +22,7 @@ namespace TikTakToe
                 }
                 Console.WriteLine();
             }           
-            Console.WriteLine("Above you see tik tak toe");
+            Console.WriteLine("Above you see tik tak toe grid");
 
             string currentPlayer = "X";
             if (currentPlayer == "X")
