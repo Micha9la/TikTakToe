@@ -8,10 +8,8 @@ namespace TikTakToe
 {
     public static class UIMethod
     {
-        public static void DisplayGrid(int[,] grid)
-        {
-            char[,] grid = new char[Constants.GRID_SIZE_ROW, Constants.GRID_SIZE_COLUMN];
-
+        public static void DisplayGrid(char[,] grid)
+        {            
             Console.Write("  ");
             for (int columnHeader = 0; columnHeader < Constants.GRID_SIZE_COLUMN; columnHeader++)
             {

@@ -11,7 +11,10 @@ namespace TikTakToe
             //const int GRID_SIZE_ROW = 3;
             //const int GRID_SIZE_COLUMN = 3;
 
+            //defines grid
+            char[,] grid = new char[Constants.GRID_SIZE_ROW, Constants.GRID_SIZE_COLUMN];
             UIMethod.DisplayGrid(grid);
+
             //player ch
             string currentPlayer = "X";
             if (currentPlayer == "X")
