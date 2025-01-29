@@ -12,7 +12,7 @@ namespace TikTakToe
             //const int GRID_SIZE_COLUMN = 3;
 
             UIMethod.DisplayGrid(grid);
-
+            //player ch
             string currentPlayer = "X";
             if (currentPlayer == "X")
             {
