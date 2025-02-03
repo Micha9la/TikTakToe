@@ -8,7 +8,7 @@ namespace TikTakToe
 {
     public static class Constants
     {
-        const int GRID_SIZE_ROW = 3;
-        const int GRID_SIZE_COLUMN = 3;
+        public const int GRID_SIZE_ROW = 3;
+        public const int GRID_SIZE_COLUMN = 3;
     }
 }

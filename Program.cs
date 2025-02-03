@@ -26,10 +26,20 @@ namespace TikTakToe
                 currentPlayer = "X";
             }
 
-            UIMethod.UserPicksCell();
-            UIMethod.Move(moveUser);            
+            Console.WriteLine("Enter the row and column(e.g., 11 for the very first cell):");
+            string moveUser = Console.ReadLine();
+            Console.WriteLine("You picked cell " + moveUser);
+            int row = int.Parse(moveUser[0].ToString()) - 1;
+            int col = int.Parse(moveUser[1].ToString()) - 1;
+            grid[row, col] = 'X';
 
-            
+
+            //grid[row, col] = 'X';
+
+
+            //Console.WriteLine(grid[row, col]);
+
+            UIMethod.DisplayGrid(grid);
         }
     }
 }

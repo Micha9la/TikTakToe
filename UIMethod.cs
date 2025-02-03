@@ -22,7 +22,7 @@ namespace TikTakToe
                 Console.Write(lineIndex + 1 + " ");
                 for (int columnIndex = 0; columnIndex < Constants.GRID_SIZE_COLUMN; columnIndex++)
                 {
-                    grid[lineIndex, columnIndex] = '_';
+                    //grid[lineIndex, columnIndex] = '_'; if this is gone it will display the respective sign X at the spot user picked
                     Console.Write(grid[lineIndex, columnIndex] + " ");
                 }
                 Console.WriteLine();
@@ -30,19 +30,15 @@ namespace TikTakToe
             Console.WriteLine("Above you see tik tak toe grid");
 
         }
-        public static void UserPicksCell()
-        {
-            Console.WriteLine("Enter the row and column(e.g., 11 for the very first cell):");
-            string moveUser = Console.ReadLine();
-            Console.WriteLine("You picked cell " + moveUser);
-        }
+        //public static void UserPicksCell()
+        
 
-        public static void Move(string moveUser)
-        {
-            int rowX = int.Parse(moveUser[0].ToString()) - 1;
-            int colX = int.Parse(moveUser[1].ToString()) - 1;
-            grid[row, col] = 'X';
-            UIMethod.Move(moveUser);
-        }
+        //public static void Move(string moveUser)
+        //{
+           // int rowX = int.Parse(moveUser[0].ToString()) - 1;
+            //int colX = int.Parse(moveUser[1].ToString()) - 1;
+            //grid[row, col] = 'X';
+            //UIMethod.Move(moveUser);
+        //}
     }
 }
