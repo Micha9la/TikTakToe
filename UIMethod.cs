@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,15 +31,31 @@ namespace TikTakToe
             Console.WriteLine("Above you see tik tak toe grid");
 
         }
-        //public static void UserPicksCell()
         
+        public static string GetUserChoice(string message)
+        {
+            Console.WriteLine(message); 
+            string answerToMessage = Console.ReadLine();            
+            return answerToMessage;
+        }
+
+        public static void PlaceSymbol(char[,] grid, string coordinateUser)
+        {
+            int row = int.Parse(coordinateUser[0].ToString()) - 1;
+            int col = int.Parse(coordinateUser[1].ToString()) - 1;
+            
+                grid[row, col] = 'X';
+        }
+
+        //public static void GetUserChoice()
+
 
         //public static void Move(string moveUser)
         //{
-           // int rowX = int.Parse(moveUser[0].ToString()) - 1;
-            //int colX = int.Parse(moveUser[1].ToString()) - 1;
-            //grid[row, col] = 'X';
-            //UIMethod.Move(moveUser);
+        // int rowX = int.Parse(moveUser[0].ToString()) - 1;
+        //int colX = int.Parse(moveUser[1].ToString()) - 1;
+        //grid[row, col] = 'X';
+        //UIMethod.Move(moveUser);
         //}
     }
 }
