@@ -27,17 +27,8 @@ namespace TikTakToe
             }
 
             string userCoordinate = UIMethod.GetUserChoice ("Enter the row and column(e.g., 11 for the very first cell):");
-            string computerCoordinates = UIMethod.RandomMove(grid);
+            string computerCoordinates = UIMethod.ProduceRandomMove();
             UIMethod.PlaceSymbol(grid, userCoordinate, computerCoordinates);
-            
-
-            
-
-
-            //grid[row, col] = 'X';
-
-
-            //Console.WriteLine(grid[row, col]);
 
             UIMethod.DisplayGrid(grid);
         }

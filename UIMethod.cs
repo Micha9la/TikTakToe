@@ -9,6 +9,7 @@ namespace TikTakToe
 {
     public static class UIMethod
     {
+        static readonly Random random = new Random();
         public static void DisplayGrid(char[,] grid)
         {            
             Console.Write("  ");
@@ -39,14 +40,9 @@ namespace TikTakToe
             return userCoordinate;
         }
 
-        public static string RandomMove(char[,] grid)
+        public static string ProduceRandomMove()
         {
-            const int UPPER_NUMBER_ROWS = 3;
-            const int LOWER_NUMBER_ROWS = 1;
-            const int UPPER_NUMBER_COLUMNS = 3;
-            const int LOWER_NUMBER_COLUMNS = 1;
-            Random random = new Random();
-            int randomCoordinateRows = random.Next(LOWER_NUMBER_ROWS, UPPER_NUMBER_ROWS);
+            int randomCoordinateRows = random.Next(Constants.LOWER_NUMBER_ROWS, Constants.UPPER_NUMBER_ROWS);
             int randomCoordinateColumns = random.Next(LOWER_NUMBER_COLUMNS, UPPER_NUMBER_COLUMNS);
             string computerCoordinatesRows = randomCoordinateRows.ToString();
             string computerCoordinatesColumns = randomCoordinateColumns.ToString();
@@ -58,7 +54,7 @@ namespace TikTakToe
         {
             int row = int.Parse(userCoordinate[0].ToString()) - 1;
             int col = int.Parse(userCoordinate[1].ToString()) - 1;
-            
+            if ()
                 grid[row, col] = 'X';
         }
 
