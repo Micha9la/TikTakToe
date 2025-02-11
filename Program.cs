@@ -26,15 +26,12 @@ namespace TikTakToe
                 currentPlayer = "X";
             }
 
-            string userCoordinates = UIMethod.GetUserChoice ("Enter the row and column(e.g., 11 for the very first cell):");
-            UIMethod.PlaceSymbol(char[,] grid, string coordinateUser);
+            string userCoordinate = UIMethod.GetUserChoice ("Enter the row and column(e.g., 11 for the very first cell):");
+            string computerCoordinates = UIMethod.RandomMove(grid);
+            UIMethod.PlaceSymbol(grid, userCoordinate, computerCoordinates);
+            
 
-            Console.WriteLine("Enter the row and column(e.g., 11 for the very first cell):");
-            string move = Console.ReadLine();
-            Console.WriteLine("You picked cell " + move);
-            int row = int.Parse(move[0].ToString()) - 1;
-            int col = int.Parse(move[1].ToString()) - 1;
-            grid[row, col] = 'X';
+            
 
 
             //grid[row, col] = 'X';

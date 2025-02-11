@@ -32,30 +32,36 @@ namespace TikTakToe
 
         }
         
-        public static string GetUserChoice(string message)
+        public static string GetUserChoice(string askCoordinates)
         {
-            Console.WriteLine(message); 
-            string answerToMessage = Console.ReadLine();            
-            return answerToMessage;
+            Console.WriteLine(askCoordinates); 
+            string userCoordinate = Console.ReadLine();            
+            return userCoordinate;
         }
 
-        public static void PlaceSymbol(char[,] grid, string coordinateUser)
+        public static string RandomMove(char[,] grid)
         {
-            int row = int.Parse(coordinateUser[0].ToString()) - 1;
-            int col = int.Parse(coordinateUser[1].ToString()) - 1;
+            const int UPPER_NUMBER_ROWS = 3;
+            const int LOWER_NUMBER_ROWS = 1;
+            const int UPPER_NUMBER_COLUMNS = 3;
+            const int LOWER_NUMBER_COLUMNS = 1;
+            Random random = new Random();
+            int randomCoordinateRows = random.Next(LOWER_NUMBER_ROWS, UPPER_NUMBER_ROWS);
+            int randomCoordinateColumns = random.Next(LOWER_NUMBER_COLUMNS, UPPER_NUMBER_COLUMNS);
+            string computerCoordinatesRows = randomCoordinateRows.ToString();
+            string computerCoordinatesColumns = randomCoordinateColumns.ToString();
+            string computerCoordinates = computerCoordinatesRows + computerCoordinatesColumns;
+            return computerCoordinates;
+        }
+
+        public static void PlaceSymbol(char[,] grid, string userCoordinate, string computerCoordinates)
+        {
+            int row = int.Parse(userCoordinate[0].ToString()) - 1;
+            int col = int.Parse(userCoordinate[1].ToString()) - 1;
             
                 grid[row, col] = 'X';
         }
 
-        //public static void GetUserChoice()
-
-
-        //public static void Move(string moveUser)
-        //{
-        // int rowX = int.Parse(moveUser[0].ToString()) - 1;
-        //int colX = int.Parse(moveUser[1].ToString()) - 1;
-        //grid[row, col] = 'X';
-        //UIMethod.Move(moveUser);
-        //}
+      
     }
 }
