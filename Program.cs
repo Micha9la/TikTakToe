@@ -8,29 +8,20 @@ namespace TikTakToe
     {
         static void Main(string[] args)
         {
-            //const int GRID_SIZE_ROW = 3;
-            //const int GRID_SIZE_COLUMN = 3;
-
             //defines grid
             char[,] grid = new char[Constants.GRID_SIZE_ROW, Constants.GRID_SIZE_COLUMN];
-            UIMethod.DisplayGrid(grid);
-
-            //player
-            string currentPlayer = "X";
-            if (currentPlayer == "X")
-            {
-                currentPlayer = "O";
-            }
-            else
-            {
-                currentPlayer = "X";
-            }
-
-            string userCoordinate = UIMethod.GetUserChoice ("Enter the row and column(e.g., 11 for the very first cell):");
-            string computerCoordinates = UIMethod.ProduceRandomMove();
-            UIMethod.PlaceSymbol(grid, userCoordinate, computerCoordinates);
 
             UIMethod.DisplayGrid(grid);
+
+            string userCoordinate = UIMethod.GetUserChoice("Enter row and column (e.g., 11 for top-left):");
+
+            UIMethod.PlaceSymbol(grid, userCoordinate);
+
+            UIMethod.DisplayGrid(grid);
+
+
+
+            //int computerMove= UIMethod.PlaceSymbol(grid, userCoordinate, computerCoordinates[0].ToString(), computerCoordinates[1].ToString());
         }
     }
 }
