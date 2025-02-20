@@ -9,13 +9,30 @@ namespace TikTakToe
     public static class LogicMethods
     {
         public static readonly Random random = new Random();
-        public static string ProduceRandomMove()
+        public static (int, int) GetRandomAvailableMove(char[,] grid)
         {
-            int randomCoordinateRows = random.Next(1, Constants.GRID_SIZE_ROW + 1);  // 1 to 3
-            int randomCoordinateColumns = random.Next(1, Constants.GRID_SIZE_COLUMN + 1);  // 1 to 3
+            List<(int, int)> availableCells = new List<(int, int)>();
 
-            return randomCoordinateRows.ToString() + randomCoordinateColumns.ToString();           
+            for (int row = 0; row < Constants.GRID_SIZE_ROW; row++)
+            {
+                for (int col = 0; col < Constants.GRID_SIZE_COLUMN; col++)
+                {
+                    if (grid[row, col] == '\0') // Check if cell is empty
+                    {
+                        availableCells.Add((row, col));
+                    }
+                }
+            }
+
+            if (availableCells.Count > 0)
+            {
+                return availableCells[random.Next(availableCells.Count)]; // Pick a random empty cell
+            }
+
+            return (-1, -1); // No available moves exist anymore
         }
+    }
+}
 
         //int randomCoordinateRows = random.Next(Constants.LOWER_NUMBER_ROWS, Constants.UPPER_NUMBER_ROWS);
         //int randomCoordinateColumns = random.Next(Constants.LOWER_NUMBER_COLUMNS, Constants.UPPER_NUMBER_COLUMNS);
@@ -24,5 +41,4 @@ namespace TikTakToe
         //string computerCoordinates = computerCoordinatesRows + computerCoordinatesColumns;
         //return computerCoordinates;
 
-    }
-}
+
