@@ -73,78 +73,12 @@ namespace TikTakToe
             {
                 grid[row, col] = 'O'; // Computer plays 'O'
             }
-        }
-
-        // PlaceSymbol is reduntant now. Have split its task into 2 methods above
-        public static void PlaceSymbol(char[,] grid, string userCoordinate)
-    {
-           int row = int.Parse(userCoordinate[0].ToString()) - 1;
-           int col = int.Parse(userCoordinate[1].ToString()) - 1;
-
-           // Ensure the USER'S move is within bounds and place 'X'
-           if (row < 0 || row >= Constants.GRID_SIZE_ROW || col < 0 || col >= Constants.GRID_SIZE_COLUMN)
-             {
-                Console.WriteLine("Invalid move! Coordinates out of bounds. Try again.");
-                return;
-             }
-
-           if (grid[row, col] == '\0')
-             {
-                grid[row, col] = 'X';
-             }
-            else
-             {
-                Console.WriteLine("That cell is already taken! Please choose another.");
-                return;
-             }
-
-           // Find all available empty cells for the COMPUTER'S move. c = column, r = row
-           List<(int, int)> availableCells = new List<(int, int)>();
-           for (int r = 0; r < Constants.GRID_SIZE_ROW; r++)
-             {
-                for (int c = 0; c < Constants.GRID_SIZE_COLUMN; c++)
-                {
-                    if (grid[r, c] == '\0') // Empty cell
-                       {
-                            availableCells.Add((r, c));
-                       }
-                }
-             }
-
-           // If there are available moves, let the computer choose randomly
-           if (availableCells.Count > 0)
-             {
-                 Random random = new Random();
-                 var (compRow, compCol) = availableCells[random.Next(availableCells.Count)];
-                 grid[compRow, compCol] = 'O';
-             }
+        }      
     }
-    }
-
 }
 
-//int r = int.Parse(userCoordinate[0].ToString()) - 1;
-//int c = int.Parse(userCoordinate[1].ToString()) - 1;
 
-//int rowComputer = int.Parse(computerCoordinatesRows[0].ToString()) - 1;
-//int colComputer = int.Parse(computerCoordinatesColumns[1].ToString()) - 1;
 
-//bool currentPlayer = true;
-//grid[r, c] = 'X';
-//grid[rowComputer, colComputer] = 'O';
-//string computerMove = "O";
-//string userMove = "X";
-
-//if (currentPlayer == true)
-//{
-//  grid[r, c] = 'X';
-//currentPlayer = false;
-//}
-//else
-//{
-//  grid[rowComputer, colComputer] = 'O';
-//currentPlayer = true;
-//}
 
 
 
