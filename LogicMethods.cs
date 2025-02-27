@@ -17,7 +17,7 @@ namespace TikTakToe
             {
                 for (int col = 0; col < Constants.GRID_SIZE_COLUMN; col++)
                 {
-                    if (grid[row, col] == '\0') // \0 is a symbol to check if cell is empty
+                    if (grid[row, col] == Constants.EMPTY_CELL) 
                     {
                         availableCells.Add((row, col));
                     }
@@ -36,14 +36,88 @@ namespace TikTakToe
         {
             if (userCoordinate.Length != 2) return false;
 
-            int row = userCoordinate[0] - '1';
-            int col = userCoordinate[1] - '1';
+            int row = userCoordinate[0] - Constants.ZERO_BASED_INDEX_SUBTRACTER;
+            int col = userCoordinate[1] - Constants.ZERO_BASED_INDEX_SUBTRACTER;
 
             if (row < 0 || row >= Constants.GRID_SIZE_ROW || col < 0 || col >= Constants.GRID_SIZE_COLUMN)
                 return false; // Out of bounds
 
-            return grid[row, col] == '\0'; // True if cell is empty
+            return grid[row, col] == Constants.EMPTY_CELL; // True if cell is empty
         }
+
+        public static void PlaceUserMove(char[,] grid, string userCoordinate)
+        {
+            int row = int.Parse(userCoordinate[0].ToString()) - 1;
+            int col = int.Parse(userCoordinate[1].ToString()) - 1;
+            grid[row, col] = Constants.USER_SYMBOL; // User always plays 'X'
+        }
+
+        public static void PlaceComputerMove(char[,] grid)
+        {
+            (int row, int col) = LogicMethods.GetRandomAvailableMove(grid);
+            if (row != -1 && col != -1)
+            {
+                grid[row, col] = Constants.COMPUTER_SYMBOL; // Computer plays 'O'
+            }
+        }
+
+        public static bool CheckWinRows(char[,] grid)
+        {
+            for (int rowIndex = 0; rowIndex < Constants.GRID_SIZE_ROW; rowIndex++)
+            {
+                if (grid[rowIndex, 0] != Constants.EMPTY_CELL &&
+                    grid[rowIndex, 0] == grid[rowIndex, 1] &&
+                    grid[rowIndex, 1] == grid[rowIndex, 2])
+                {
+                    return true; // Row win
+                }
+            }
+            return false; // No row win found
+        }
+
+        public static bool CheckWinColumns(char[,] grid)
+        {
+            for (int columnIndex = 0; columnIndex < Constants.GRID_SIZE_COLUMN; columnIndex++)
+            {
+                if (grid[0, columnIndex] != Constants.EMPTY_CELL &&
+                    grid[0, columnIndex] == grid[1, columnIndex] &&
+                    grid[1, columnIndex] == grid[2, columnIndex])
+                {
+                    return true; // Column win
+                }
+            }
+            return false; // No column win found
+        }
+
+        public static bool CheckWinDiagonals(char[,] grid)
+        {
+            if (grid[0, 0] != Constants.EMPTY_CELL &&
+                grid[0, 0] == grid[1, 1] &&
+                grid[1, 1] == grid[2, 2])
+            {
+                return true; // Main diagonal win
+            }
+
+            if (grid[0, 2] != Constants.EMPTY_CELL &&
+                grid[0, 2] == grid[1, 1] &&
+                grid[1, 1] == grid[2, 0])
+            {
+                return true; // Anti-diagonal win
+            }
+
+            return false; // No diagonal win found
+        }
+
+        public static bool CheckDraw(char[,] grid)
+        {
+            foreach (char cell in grid)
+            {
+                if (cell == Constants.EMPTY_CELL) // If any empty cell exists, the game continues
+                    return false;
+            }
+            return true; // No empty cells left, it's a draw
+        }
+
         public static bool IsGameOver(char[,] grid)
         {
             // Check Rows & Columns in One Loop
@@ -71,7 +145,7 @@ namespace TikTakToe
             }
 
             //if program reached here, it is a draw
-            Console.WriteLine("It's a draw!");
+            //Console.WriteLine("It's a draw!");
             return true;
         }
     }

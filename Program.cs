@@ -33,22 +33,28 @@ namespace TikTakToe
                 
                 while (!validMove);
 
-                UIMethod.PlaceUserMove(grid, userCoordinate);
+                LogicMethods.PlaceUserMove(grid, userCoordinate);
                 UIMethod.DisplayGrid(grid);
 
-                // Check if user won
-                if (LogicMethods.IsGameOver(grid))
+                if (LogicMethods.CheckWinRows(grid) || LogicMethods.CheckWinColumns(grid) || LogicMethods.CheckWinDiagonals(grid))
                 {
                     Console.WriteLine("You win!");
                     break;
                 }
+                
+                if (LogicMethods.CheckDraw(grid))
+                {
+                    Console.WriteLine("It's a draw!");
+                    break;
+                }                
 
                 //Computer's move
+
                 (int row, int col) = LogicMethods.GetRandomAvailableMove(grid);
 
                 if (row != -1 && col != -1)
                 {
-                    UIMethod.PlaceComputerMove(grid);
+                    LogicMethods.PlaceComputerMove(grid);
                     UIMethod.DisplayGrid(grid);
                 }
                 else
@@ -57,12 +63,23 @@ namespace TikTakToe
                     break;
                 }
 
-                //Check if computer won
-                if (LogicMethods.IsGameOver(grid))
+                if (LogicMethods.CheckWinRows(grid) || LogicMethods.CheckWinColumns(grid) || LogicMethods.CheckWinDiagonals(grid))
                 {
                     Console.WriteLine("Computer wins!");
                     break;
                 }
+                if (LogicMethods.CheckDraw(grid))
+                {
+                    Console.WriteLine("It's a draw!");
+                    break;
+                }
+
+                //Check if computer won
+                //if (LogicMethods.IsGameOver(grid))
+                //{
+                //  Console.WriteLine("Computer wins!");
+                //break;
+                //}
             }
 
 

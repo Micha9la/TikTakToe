@@ -56,24 +56,7 @@ namespace TikTakToe
                 Console.WriteLine("Invalid input. Please enter a valid rpw and column (e.g., '11' for the top-left cell).");
             }
             return userCoordinate;
-        }
-
-
-        public static void PlaceUserMove(char[,] grid, string userCoordinate)
-        {
-            int row = int.Parse(userCoordinate[0].ToString()) - 1;
-            int col = int.Parse(userCoordinate[1].ToString()) - 1;
-            grid[row, col] = 'X'; // User always plays 'X'
-        }
-
-        public static void PlaceComputerMove(char[,] grid)
-        {
-            (int row, int col) = LogicMethods.GetRandomAvailableMove(grid);
-            if (row != -1 && col != -1)
-            {
-                grid[row, col] = 'O'; // Computer plays 'O'
-            }
-        }      
+        }  
     }
 }
 
