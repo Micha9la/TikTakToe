@@ -65,47 +65,69 @@ namespace TikTakToe
         {
             for (int rowIndex = 0; rowIndex < Constants.GRID_SIZE_ROW; rowIndex++)
             {
-                if (grid[rowIndex, 0] != Constants.EMPTY_CELL &&
-                    grid[rowIndex, 0] == grid[rowIndex, 1] &&
-                    grid[rowIndex, 1] == grid[rowIndex, 2])
+                char firstSymbol = grid[rowIndex, 0]; // First symbol in the row
+                if (firstSymbol == Constants.EMPTY_CELL) continue; // Ignore empty rows
+
+                bool rowWin = true;
+                for (int colIndex = 1; colIndex < Constants.GRID_SIZE_COLUMN; colIndex++)
                 {
-                    return true; // Row win
+                    if (grid[rowIndex, colIndex] != firstSymbol)
+                    {
+                        rowWin = false;
+                        break;
+                    }
                 }
+
+                if (rowWin)
+                    return true; // Found a winning row
             }
-            return false; // No row win found
+            return false; // No winning row found
         }
 
         public static bool CheckWinColumns(char[,] grid)
         {
-            for (int columnIndex = 0; columnIndex < Constants.GRID_SIZE_COLUMN; columnIndex++)
+            for (int colIndex = 0; colIndex < Constants.GRID_SIZE_COLUMN; colIndex++)
             {
-                if (grid[0, columnIndex] != Constants.EMPTY_CELL &&
-                    grid[0, columnIndex] == grid[1, columnIndex] &&
-                    grid[1, columnIndex] == grid[2, columnIndex])
+                char firstSymbol = grid[0, colIndex]; // First symbol in the column
+                if (firstSymbol == Constants.EMPTY_CELL) continue; // Ignore empty columns
+
+                bool colWin = true;
+                for (int rowIndex = 1; rowIndex < Constants.GRID_SIZE_ROW; rowIndex++)
                 {
-                    return true; // Column win
+                    if (grid[rowIndex, colIndex] != firstSymbol)
+                    {
+                        colWin = false;
+                        break;
+                    }
                 }
+
+                if (colWin)
+                    return true; // Found a winning column
             }
-            return false; // No column win found
+            return false; // No winning column found
         }
 
         public static bool CheckWinDiagonals(char[,] grid)
         {
-            if (grid[0, 0] != Constants.EMPTY_CELL &&
-                grid[0, 0] == grid[1, 1] &&
-                grid[1, 1] == grid[2, 2])
+            bool mainDiagonalWin = true;
+            bool antiDiagonalWin = true;
+            char mainSymbol = grid[0, 0]; // First cell of main diagonal
+            char antiSymbol = grid[0, Constants.GRID_SIZE_COLUMN - 1]; // First cell of anti-diagonal
+
+            if (mainSymbol == Constants.EMPTY_CELL) 
+                mainDiagonalWin = false;
+            if (antiSymbol == Constants.EMPTY_CELL) 
+                antiDiagonalWin = false;
+
+            for (int i = 1; i < Constants.GRID_SIZE_ROW; i++)
             {
-                return true; // Main diagonal win
+                if (grid[i, i] != mainSymbol) 
+                    mainDiagonalWin = false; // Main diagonal
+                if (grid[i, Constants.GRID_SIZE_COLUMN - 1 - i] != antiSymbol) 
+                    antiDiagonalWin = false; // Anti-diagonal
             }
 
-            if (grid[0, 2] != Constants.EMPTY_CELL &&
-                grid[0, 2] == grid[1, 1] &&
-                grid[1, 1] == grid[2, 0])
-            {
-                return true; // Anti-diagonal win
-            }
-
-            return false; // No diagonal win found
+            return mainDiagonalWin || antiDiagonalWin; //if at least one of these two variables is true, it will return true
         }
 
         public static bool CheckDraw(char[,] grid)
@@ -120,33 +142,7 @@ namespace TikTakToe
 
         public static bool IsGameOver(char[,] grid)
         {
-            // Check Rows & Columns in One Loop
-            for (int i = 0; i < Constants.GRID_SIZE_ROW; i++)
-            {
-                if (grid[i, 0] != '\0' && grid[i, 0] == grid[i, 1] && grid[i, 1] == grid[i, 2])
-                    return true; // Row win
-
-                if (grid[0, i] != '\0' && grid[0, i] == grid[1, i] && grid[1, i] == grid[2, i])
-                    return true; // Column win
-            }
-
-            // Check Diagonals
-            if (grid[0, 0] != '\0' && grid[0, 0] == grid[1, 1] && grid[1, 1] == grid[2, 2])
-                return true; // Main diagonal
-
-            if (grid[0, 2] != '\0' && grid[0, 2] == grid[1, 1] && grid[1, 1] == grid[2, 0])
-                return true; // Anti-diagonal
-
-            // Check for a Draw (No empty cells left)
-            foreach (char cell in grid)
-            {
-                if (cell == '\0') // Empty cell found, game continues
-                    return false;
-            }
-
-            //if program reached here, it is a draw
-            //Console.WriteLine("It's a draw!");
-            return true;
+            return CheckWinRows(grid) || CheckWinColumns(grid) || CheckWinDiagonals(grid) || CheckDraw(grid);
         }
     }
 }
