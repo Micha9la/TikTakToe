@@ -35,28 +35,10 @@ namespace TikTakToe
 
         public static string GetUserChoice(string askCoordinates)
         {
-            string userCoordinate;
-            while (true)
-            {
-                Console.WriteLine(askCoordinates);
-                userCoordinate = Console.ReadLine();
-
-                // Ensure user enters exactly 2 characters and both are digits
-                if (userCoordinate.Length == 2 && char.IsDigit(userCoordinate[0]) && char.IsDigit(userCoordinate[1]))
-                {
-                    int row = int.Parse(userCoordinate[0].ToString());
-                    int col = int.Parse(userCoordinate[1].ToString());
-
-                    if (row >= Constants.LOWER_NUMBER_ROWS && row < Constants.UPPER_NUMBER_ROWS &&
-                        col >= Constants.LOWER_NUMBER_COLUMNS && col < Constants.UPPER_NUMBER_COLUMNS)
-                    {
-                        break;
-                    }
-                }
-                Console.WriteLine("Invalid input. Please enter a valid rpw and column (e.g., '11' for the top-left cell).");
-            }
-            return userCoordinate;
-        }  
+            Console.WriteLine(askCoordinates);
+            return Console.ReadLine();
+        }
+       
     }
 }
 

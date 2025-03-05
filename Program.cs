@@ -9,13 +9,12 @@ namespace TikTakToe
         static void Main(string[] args)
         {
             //defines grid
-            char[,] grid = new char[Constants.GRID_SIZE_ROW, Constants.GRID_SIZE_COLUMN];
-            bool gameOver = false;
+            char[,] grid = new char[Constants.GRID_SIZE_ROW, Constants.GRID_SIZE_COLUMN];           
 
             UIMethod.DisplayGrid(grid);
 
             //loop keeps running until someone wins or board is full.
-            while (!gameOver)
+            while (true)
             {
                 //User's move
                 string userCoordinate;
@@ -24,67 +23,36 @@ namespace TikTakToe
                 do
                 {
                     userCoordinate = UIMethod.GetUserChoice("Enter the row and column (e.g., 11 for top-left):");
-                    validMove = LogicMethods.IsValidMove(grid, userCoordinate);
 
-                    if (!validMove)
-                        Console.WriteLine("Invalid move! That cell is occupied or out of bounds. Try again.");
+                    if (LogicMethods.ValidateInput(userCoordinate, out int selectRow, out int selectCol) &&
+                        LogicMethods.CheckCellEmpty(grid, selectRow, selectCol))
+                    {
+                        validMove = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid move! Either out of bounds or cell is occupied.");
+                    }
 
-                } 
-                
-                while (!validMove);
+                } while (!validMove);
+
+
 
                 LogicMethods.PlaceUserMove(grid, userCoordinate);
                 UIMethod.DisplayGrid(grid);
 
-                if (LogicMethods.CheckWinRows(grid) || LogicMethods.CheckWinColumns(grid) || LogicMethods.CheckWinDiagonals(grid))
-                {
-                    Console.WriteLine("You win!");
+                // Check if user wins or game is a draw
+                if (LogicMethods.CheckGameStatus(grid, "You win!"))
                     break;
-                }
-                
-                if (LogicMethods.CheckDraw(grid))
-                {
-                    Console.WriteLine("It's a draw!");
+
+                // Computer's move
+                LogicMethods.PlaceComputerMove(grid);
+                UIMethod.DisplayGrid(grid);
+
+                // Check if computer wins or game is a draw
+                if (LogicMethods.CheckGameStatus(grid, "Computer wins!"))
                     break;
-                }                
-
-                //Computer's move
-
-                (int row, int col) = LogicMethods.GetRandomAvailableMove(grid);
-
-                if (row != -1 && col != -1)
-                {
-                    LogicMethods.PlaceComputerMove(grid);
-                    UIMethod.DisplayGrid(grid);
-                }
-                else
-                {
-                    Console.WriteLine("No available moves left! The game is a draw.");
-                    break;
-                }
-
-                if (LogicMethods.CheckWinRows(grid) || LogicMethods.CheckWinColumns(grid) || LogicMethods.CheckWinDiagonals(grid))
-                {
-                    Console.WriteLine("Computer wins!");
-                    break;
-                }
-                if (LogicMethods.CheckDraw(grid))
-                {
-                    Console.WriteLine("It's a draw!");
-                    break;
-                }
-
-                //Check if computer won
-                //if (LogicMethods.IsGameOver(grid))
-                //{
-                //  Console.WriteLine("Computer wins!");
-                //break;
-                //}
             }
-
-
-
-            
         }
     }
 }

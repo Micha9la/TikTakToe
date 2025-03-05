@@ -32,23 +32,39 @@ namespace TikTakToe
             return (-1, -1); // No available moves exist anymore
         }
 
-        public static bool IsValidMove(char[,] grid, string userCoordinate)
+        public static bool CheckCellEmpty(char[,] grid, int row, int col)
         {
-            if (userCoordinate.Length != 2) return false;
-
-            int row = userCoordinate[0] - Constants.ZERO_BASED_INDEX_SUBTRACTER;
-            int col = userCoordinate[1] - Constants.ZERO_BASED_INDEX_SUBTRACTER;
-
-            if (row < 0 || row >= Constants.GRID_SIZE_ROW || col < 0 || col >= Constants.GRID_SIZE_COLUMN)
-                return false; // Out of bounds
-
-            return grid[row, col] == Constants.EMPTY_CELL; // True if cell is empty
+            return grid[row, col] == Constants.EMPTY_CELL;
         }
 
+        public static bool ValidateInput(string userCoordinate, out int row, out int col)
+        {
+            row = -1;
+            col = -1;
+
+            // Ensure input is exactly 2 characters and both are digits
+            if (userCoordinate.Length == 2 &&
+                int.TryParse(userCoordinate[0].ToString(), out int parsedRow) &&
+                int.TryParse(userCoordinate[1].ToString(), out int parsedCol))
+            {
+                // Convert to zero-based index (subtract 1 if necessary)
+                row = parsedRow - Constants.ZERO_BASED_INDEX_SUBTRACTER;
+                col = parsedCol - Constants.ZERO_BASED_INDEX_SUBTRACTER;
+
+                // Validate within board boundaries
+                if (row >= Constants.LOWER_NUMBER_ROWS && row < Constants.UPPER_NUMBER_ROWS &&
+                    col >= Constants.LOWER_NUMBER_COLUMNS && col < Constants.UPPER_NUMBER_COLUMNS)
+                {
+                    return true;
+                }
+            }
+
+            return false; // Invalid input
+        }
         public static void PlaceUserMove(char[,] grid, string userCoordinate)
         {
-            int row = int.Parse(userCoordinate[0].ToString()) - 1;
-            int col = int.Parse(userCoordinate[1].ToString()) - 1;
+            int row = int.Parse(userCoordinate[0].ToString()) - Constants.ZERO_BASED_INDEX_SUBTRACTER;
+            int col = int.Parse(userCoordinate[1].ToString()) - Constants.ZERO_BASED_INDEX_SUBTRACTER;
             grid[row, col] = Constants.USER_SYMBOL; // User always plays 'X'
         }
 
@@ -59,14 +75,15 @@ namespace TikTakToe
             {
                 grid[row, col] = Constants.COMPUTER_SYMBOL; // Computer plays 'O'
             }
-        }
+        }       
 
         public static bool CheckWinRows(char[,] grid)
         {
             for (int rowIndex = 0; rowIndex < Constants.GRID_SIZE_ROW; rowIndex++)
             {
                 char firstSymbol = grid[rowIndex, 0]; // First symbol in the row
-                if (firstSymbol == Constants.EMPTY_CELL) continue; // Ignore empty rows
+                if (firstSymbol == Constants.EMPTY_CELL) 
+                    continue; // Ignore empty rows
 
                 bool rowWin = true;
                 for (int colIndex = 1; colIndex < Constants.GRID_SIZE_COLUMN; colIndex++)
@@ -112,7 +129,7 @@ namespace TikTakToe
             bool mainDiagonalWin = true;
             bool antiDiagonalWin = true;
             char mainSymbol = grid[0, 0]; // First cell of main diagonal
-            char antiSymbol = grid[0, Constants.GRID_SIZE_COLUMN - 1]; // First cell of anti-diagonal
+            char antiSymbol = grid[0, Constants.GRID_SIZE_COLUMN - Constants.ZERO_BASED_INDEX_SUBTRACTER]; // First cell of anti-diagonal
 
             if (mainSymbol == Constants.EMPTY_CELL) 
                 mainDiagonalWin = false;
@@ -123,7 +140,7 @@ namespace TikTakToe
             {
                 if (grid[i, i] != mainSymbol) 
                     mainDiagonalWin = false; // Main diagonal
-                if (grid[i, Constants.GRID_SIZE_COLUMN - 1 - i] != antiSymbol) 
+                if (grid[i, Constants.GRID_SIZE_COLUMN - Constants.ZERO_BASED_INDEX_SUBTRACTER - i] != antiSymbol) 
                     antiDiagonalWin = false; // Anti-diagonal
             }
 
@@ -140,9 +157,23 @@ namespace TikTakToe
             return true; // No empty cells left, it's a draw
         }
 
-        public static bool IsGameOver(char[,] grid)
+        public static bool CheckGameStatus(char[,] grid, string winnerMessage)
         {
-            return CheckWinRows(grid) || CheckWinColumns(grid) || CheckWinDiagonals(grid) || CheckDraw(grid);
+            if (LogicMethods.CheckWinRows(grid) ||
+                LogicMethods.CheckWinColumns(grid) ||
+                LogicMethods.CheckWinDiagonals(grid))
+            {
+                Console.WriteLine(winnerMessage);
+                return true; // Game is over
+            }
+
+            if (LogicMethods.CheckDraw(grid))
+            {
+                Console.WriteLine("It's a draw!");
+                return true; // Game is over
+            }
+
+            return false; // Game continues
         }
     }
 }
