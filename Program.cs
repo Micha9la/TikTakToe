@@ -38,7 +38,8 @@ namespace TikTakToe
 
 
 
-                LogicMethods.PlaceUserMove(grid, userCoordinate);
+                LogicMethods.PlaceUserMove(grid, userCoordinate);               
+                Console.WriteLine("Checking wins...");
                 UIMethod.DisplayGrid(grid);
 
                 // Check if user wins or game is a draw

@@ -16,7 +16,8 @@ namespace TikTakToe
         public const int LOWER_NUMBER_COLUMNS = 1;
 
         public const int EMPTY_CELL = '\0'; // \0 is a symbol to check if cell is empty
-        public const int ZERO_BASED_INDEX_SUBTRACTER = '1';
+        public const int ZERO_BASED_INDEX_SUBTRACTER = 1;
+        public const int ZERO_BASED_LOWER_BOUND = 0;
         public const char USER_SYMBOL = 'X';
         public const char COMPUTER_SYMBOL = 'O';
     }

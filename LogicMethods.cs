@@ -8,6 +8,7 @@ namespace TikTakToe
 {
     public static class LogicMethods
     {
+        //provides a reusable random number generator.
         public static readonly Random random = new Random();
         public static (int, int) GetRandomAvailableMove(char[,] grid)
         {
@@ -33,7 +34,7 @@ namespace TikTakToe
         }
 
         public static bool CheckCellEmpty(char[,] grid, int row, int col)
-        {
+        {            
             return grid[row, col] == Constants.EMPTY_CELL;
         }
 
@@ -42,6 +43,7 @@ namespace TikTakToe
             row = -1;
             col = -1;
 
+            Console.WriteLine($"User input: {userCoordinate}");
             // Ensure input is exactly 2 characters and both are digits
             if (userCoordinate.Length == 2 &&
                 int.TryParse(userCoordinate[0].ToString(), out int parsedRow) &&
@@ -52,19 +54,19 @@ namespace TikTakToe
                 col = parsedCol - Constants.ZERO_BASED_INDEX_SUBTRACTER;
 
                 // Validate within board boundaries
-                if (row >= Constants.LOWER_NUMBER_ROWS && row < Constants.UPPER_NUMBER_ROWS &&
-                    col >= Constants.LOWER_NUMBER_COLUMNS && col < Constants.UPPER_NUMBER_COLUMNS)
-                {
+                if (row >= Constants.ZERO_BASED_LOWER_BOUND && row < Constants.GRID_SIZE_ROW &&
+                    col >= Constants.ZERO_BASED_LOWER_BOUND && col < Constants.GRID_SIZE_COLUMN)
+                {                    
                     return true;
-                }
-            }
-
+                }              
+            }           
             return false; // Invalid input
         }
         public static void PlaceUserMove(char[,] grid, string userCoordinate)
         {
             int row = int.Parse(userCoordinate[0].ToString()) - Constants.ZERO_BASED_INDEX_SUBTRACTER;
             int col = int.Parse(userCoordinate[1].ToString()) - Constants.ZERO_BASED_INDEX_SUBTRACTER;
+            
             grid[row, col] = Constants.USER_SYMBOL; // User always plays 'X'
         }
 
@@ -82,8 +84,11 @@ namespace TikTakToe
             for (int rowIndex = 0; rowIndex < Constants.GRID_SIZE_ROW; rowIndex++)
             {
                 char firstSymbol = grid[rowIndex, 0]; // First symbol in the row
-                if (firstSymbol == Constants.EMPTY_CELL) 
-                    continue; // Ignore empty rows
+                
+                if (firstSymbol == Constants.EMPTY_CELL)
+                {                   
+                    continue; // Continue checking other rows. Ignore emtpy rows
+                }               
 
                 bool rowWin = true;
                 for (int colIndex = 1; colIndex < Constants.GRID_SIZE_COLUMN; colIndex++)
@@ -96,7 +101,10 @@ namespace TikTakToe
                 }
 
                 if (rowWin)
-                    return true; // Found a winning row
+                {
+                    return true; //Found a winning row
+                }
+                
             }
             return false; // No winning row found
         }
@@ -106,7 +114,8 @@ namespace TikTakToe
             for (int colIndex = 0; colIndex < Constants.GRID_SIZE_COLUMN; colIndex++)
             {
                 char firstSymbol = grid[0, colIndex]; // First symbol in the column
-                if (firstSymbol == Constants.EMPTY_CELL) continue; // Ignore empty columns
+                if (firstSymbol == Constants.EMPTY_CELL) 
+                    continue; // Ignore empty columns
 
                 bool colWin = true;
                 for (int rowIndex = 1; rowIndex < Constants.GRID_SIZE_ROW; rowIndex++)

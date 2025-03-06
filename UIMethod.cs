@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 namespace TikTakToe
 {
     public static class UIMethod
-    {
-        static readonly Random random = new Random();
+    {        
         public static void DisplayGrid(char[,] grid)
         {
             Console.Write("  ");
