@@ -38,7 +38,25 @@ namespace TikTakToe
             Console.WriteLine(askCoordinates);
             return Console.ReadLine();
         }
-       
+
+        public static bool CheckGameStatus(char[,] grid, string winnerMessage)
+        {
+            if (LogicMethods.CheckWinRows(grid) ||
+                LogicMethods.CheckWinColumns(grid) ||
+                LogicMethods.CheckWinDiagonals(grid))
+            {
+                Console.WriteLine(winnerMessage);
+                return true; // Game is over
+            }
+
+            if (LogicMethods.CheckDraw(grid))
+            {
+                Console.WriteLine("It's a draw!");
+                return true; // Game is over
+            }
+
+            return false; // Game continues
+        }
     }
 }
 
