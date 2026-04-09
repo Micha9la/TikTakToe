@@ -9,7 +9,16 @@ namespace TikTakToe
         static void Main(string[] args)
         {
             //defines grid
-            char[,] grid = new char[Constants.GRID_SIZE_ROW, Constants.GRID_SIZE_COLUMN];           
+            char[,] grid = new char[Constants.GRID_SIZE_ROW, Constants.GRID_SIZE_COLUMN];
+
+            //initialize grid with empty cells
+            for (int row = 0; row < Constants.GRID_SIZE_ROW; row++)
+            {
+                for (int col = 0; col < Constants.GRID_SIZE_COLUMN; col++)
+                {
+                    grid[row, col] = Constants.EMPTY_CELL;
+                }
+            }
 
             UIMethod.DisplayGrid(grid);
 
@@ -19,12 +28,14 @@ namespace TikTakToe
                 //User's move
                 string userCoordinate;
                 bool validMove = false;
+                int selectRow = -1;
+                int selectCol = -1;
 
                 do
                 {
-                    userCoordinate = UIMethod.GetUserChoice("Enter the row and column (e.g., 11 for top-left):");
+                    userCoordinate = UIMethod.GetUserChoice("Enter the row and column (e.g., 21 for first cell in middle line):");
 
-                    if (LogicMethods.ValidateInput(userCoordinate, out int selectRow, out int selectCol) &&
+                    if (LogicMethods.ValidateInput(userCoordinate, out selectRow, out selectCol) &&
                         LogicMethods.CheckCellEmpty(grid, selectRow, selectCol))
                     {
                         validMove = true;
@@ -38,7 +49,7 @@ namespace TikTakToe
 
 
 
-                LogicMethods.PlaceUserMove(grid, userCoordinate);               
+                LogicMethods.PlaceUserMove(grid, selectRow, selectCol);
                 Console.WriteLine("Checking wins...");
                 UIMethod.DisplayGrid(grid);
 

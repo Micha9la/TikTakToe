@@ -8,30 +8,62 @@ using System.Threading.Tasks;
 namespace TikTakToe
 {
     public static class UIMethod
-    {        
+    {
         public static void DisplayGrid(char[,] grid)
         {
-            //prints 2 spaces of alignment
-            Console.Write("  ");
-            //Prints column numbers (1 2 3) so users see coordinates.
-            for (int columnHeader = 0; columnHeader < Constants.GRID_SIZE_COLUMN; columnHeader++)
-            {
-                Console.Write(columnHeader + 1 + " "); //We add 1 because arrays are zero-based, but users see 1-based indexing.
-            }
-            Console.WriteLine(); //moves to a new line
+            // spacing for top-left corner
+            Console.Write("   ");
 
-            for (int lineIndex = 0; lineIndex < Constants.GRID_SIZE_ROW; lineIndex++)//loops through rows
+            // column headers
+            for (int columnHeader = Constants.ZERO_BASED_LOWER_BOUND; columnHeader < Constants.GRID_SIZE_COLUMN; columnHeader++)
             {
-                Console.Write(lineIndex + 1 + " ");//prints row numbers
-                for (int columnIndex = 0; columnIndex < Constants.GRID_SIZE_COLUMN; columnIndex++)
+                Console.Write($" {columnHeader + 1} ");
+
+                if (columnHeader < Constants.GRID_SIZE_COLUMN - 1)
                 {
-                    //grid[lineIndex, columnIndex] = '_'; if this is gone it will display the respective sign X at the spot user picked
-                    Console.Write(grid[lineIndex, columnIndex] + " ");//Prints X, O, or empty space
+                    Console.Write(" ");
                 }
-                Console.WriteLine();//moves to next row
             }
-            Console.WriteLine("Above you see tik tak toe grid");
+            Console.WriteLine();
 
+            for (int lineIndex = Constants.ZERO_BASED_LOWER_BOUND; lineIndex < Constants.GRID_SIZE_ROW; lineIndex++)
+            {
+                // row number
+                Console.Write($" {lineIndex + 1} ");
+
+                for (int columnIndex = Constants.ZERO_BASED_LOWER_BOUND; columnIndex < Constants.GRID_SIZE_COLUMN; columnIndex++)
+                {
+                    // 🔥 consistent cell width
+                    Console.Write($" {grid[lineIndex, columnIndex]} ");
+
+                    if (columnIndex < Constants.GRID_SIZE_COLUMN - 1)
+                    {
+                        Console.Write("|");
+                    }
+                }
+
+                Console.WriteLine();
+
+                // separator
+                if (lineIndex < Constants.GRID_SIZE_ROW - 1)
+                {
+                    Console.Write("   ");
+
+                    for (int separatorIndex = Constants.ZERO_BASED_LOWER_BOUND; separatorIndex < Constants.GRID_SIZE_COLUMN; separatorIndex++)
+                    {
+                        Console.Write("---");
+
+                        if (separatorIndex < Constants.GRID_SIZE_COLUMN - 1)
+                        {
+                            Console.Write("+");
+                        }
+                    }
+
+                    Console.WriteLine();
+                }
+            }
+
+            Console.WriteLine("Above you see tic tac toe grid");
         }
 
         public static string GetUserChoice(string askCoordinates)
@@ -40,24 +72,6 @@ namespace TikTakToe
             return Console.ReadLine();
         }
 
-        public static bool CheckGameStatus(char[,] grid, string winnerMessage)
-        {
-            if (LogicMethods.CheckWinRows(grid) ||
-                LogicMethods.CheckWinColumns(grid) ||
-                LogicMethods.CheckWinDiagonals(grid))
-            {
-                Console.WriteLine(winnerMessage);
-                return true; // Game is over
-            }
-
-            if (LogicMethods.CheckDraw(grid))
-            {
-                Console.WriteLine("It's a draw!");
-                return true; // Game is over
-            }
-
-            return false; // Game continues
-        }
     }
 }
 

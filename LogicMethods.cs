@@ -62,11 +62,8 @@ namespace TikTakToe
             }           
             return false; // Invalid input
         }
-        public static void PlaceUserMove(char[,] grid, string userCoordinate)
-        {
-            int row = int.Parse(userCoordinate[0].ToString()) - Constants.ZERO_BASED_INDEX_SUBTRACTER;
-            int col = int.Parse(userCoordinate[1].ToString()) - Constants.ZERO_BASED_INDEX_SUBTRACTER;
-            
+        public static void PlaceUserMove(char[,] grid, int row, int col)
+        {   
             grid[row, col] = Constants.USER_SYMBOL; // User always plays 'X'
         }
 
