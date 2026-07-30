@@ -1,24 +1,32 @@
 Tic Tac Toe:
+This project is a console-based implementation of the classic Tic Tac Toe game developed in C#.
+It was created to strengthen my understanding of object-oriented programming and application design while learning C#.
 
-This project was developed as part of my journey into C# and object-oriented programming.
-
-Written entirely by myself without AI-generated code to build a solid understanding of software design and programming fundamentals.
+The project was written independently without AI-generated code to build strong programming fundamentals.
 
 Features:
 Console-based gameplay
-Human vs Human
-Clean object-oriented architecture
-Win detection
-Draw detection
+Two-player mode
+Win and draw detection
 Input validation
-Technologies
+Structured project architecture
+Reusable game logic
+
+Technologies:
 C#
 .NET
+Console Application
 
-What I learned:
+Skills Demonstrated:
 Object-Oriented Programming
-Methods
-Classes
-Game logic
-Clean code
-Problem solving
+Separation of Concerns
+Classes and Methods
+Constants
+Game Logic
+Input Validation
+Problem Solving
+
+Future Improvements:
+Computer AI opponent
+Graphical user interface
+Difficulty levels
